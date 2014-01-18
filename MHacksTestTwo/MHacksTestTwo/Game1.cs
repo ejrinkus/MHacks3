@@ -98,18 +98,14 @@ namespace MHacksTestOne
             player_one.Update();
 
             // Filter logic (narrower bandpass filter when the character is higher up)
-            float ratio = player_one.location.Y / 448f;
-            float low = ratio * 360f;
+            float ratio = player_one.location.Y / (this.GraphicsDevice.Viewport.Height - player_one.cur_height);
+            float low = 360f - (360f * ratio);
             float high = 16000f - (low * 43.333f);
-            if (music.isFiltered() && ratio == 1f)
-            {
-                music.toggleFilter();
-            }
-            else if (ratio < 1f)
-            {
-                music.transformFilter(low, high);
-            }
+            music.transformFilter(low, high);
 
+            // Pan logic (match pan to lateral location of character)
+            ratio = player_one.location.X / ((this.GraphicsDevice.Viewport.Width + player_one.cur_width) / 2);
+            music.pan(ratio - 1);
 
             // TODO: Add your update logic here
 

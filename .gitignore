@@ -108,8 +108,6 @@ Backup*/
 UpgradeLog*.XML
 MHacksTestTwo/MHacksTestTwo.v11.suo
 MHacksTestTwo/MHacksTestTwo/bin/Windows/Debug/MHacksTestTwo.exe
-MHacksTestTwo/MHacksTestTwo/bin/Windows/Debug/MHacksTestTwo.exe
-MHacksTestTwo/MHacksTestTwo/bin/Windows/Debug/MHacksTestTwo.exe
 MHacksTestTwo/MHacksTestTwo/bin/Windows/Debug/MHacksTestTwo.pdb
 MHacksTestTwo/MHacksTestTwo/bin/Windows/Debug/MHacksTestTwo.vshost.exe
 MHacksTestTwo/MHacksTestTwo/obj/x86/Debug/MHacksTestTwo.csproj.FileListAbsolute.txt

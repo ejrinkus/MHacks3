@@ -247,5 +247,11 @@ namespace MHacksTestOne
             Bass.BASS_ChannelSetAttribute(streamFX, BASSAttribute.BASS_ATTRIB_TEMPO_PITCH, pitch - semitones);
         }
 
+        // Sets pan to "amount" (-1.0 left, 0.0 center, 1.0 right);
+        public void pan(float amount)
+        {
+            Bass.BASS_ChannelSetAttribute(streamFX, BASSAttribute.BASS_ATTRIB_PAN, amount);
+        }
+
     }
 }

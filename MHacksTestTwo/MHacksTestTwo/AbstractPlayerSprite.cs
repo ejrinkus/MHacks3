@@ -53,15 +53,15 @@ namespace MHacksTestOne
                 //gravity
                 if (velocity.Y != 0) //if they're falling then keep accelerating them
                 {
-                    velocity.Y -= 5;
+                    velocity.Y -= 0.05f;
                     if (velocity.Y == 0) //if we hit a stop condition, prevent that from triggering the user to jump
                         velocity.Y = -1;
                 }
 
 
-                if (velocity.Y < -20) //limit free fall rate
+                if (velocity.Y < -10) //limit free fall rate
                 {
-                    velocity.Y = -20;
+                    velocity.Y = -10;
                 }
             }
             else //on collision
