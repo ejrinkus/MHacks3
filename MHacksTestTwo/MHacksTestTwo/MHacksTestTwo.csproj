@@ -40,11 +40,13 @@
     <Compile Include="ControllerPlayerSprite.cs" />
     <Compile Include="EnemySprite.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Music.cs" />
     <Compile Include="PlatformSprite.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Bass.Net, Version=2.4.10.3, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL" />
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
