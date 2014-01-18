@@ -22,14 +22,7 @@ namespace BASSProto1
         SpriteBatch spriteBatch;
         KeyboardState currKeyState;
         KeyboardState prevKeyState;
-        int stream;
-        int fxFlanger;
-        int fxReverb;
-        int fxFilter;
-        int fxChorus;
-        int fxGargle;
-        int fxOverdrive;
-        int fxDistortion;
+        Music music;
 
         public Game1()
             : base()
@@ -58,24 +51,8 @@ namespace BASSProto1
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-
-            // init BASS using the default output device 
-            if (Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
-            {
-                // create a stream channel from a file
-                stream = Bass.BASS_StreamCreateFile("Content/cinema.wav", 0, 0, BASSFlag.BASS_DEFAULT);
-                if (stream != 0)
-                {
-                    // play the stream channel
-                    Bass.BASS_ChannelPlay(stream, false);
-                }
-                else
-                {
-                    // error creating the stream 
-                    Console.WriteLine("Stream error: {0}", Bass.BASS_ErrorGetCode());
-                }
-
-            }
+            // Create the music object
+            music = new Music("Content/cinema.wav");
         }
 
         /// <summary>
@@ -84,7 +61,7 @@ namespace BASSProto1
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            music.unload();
         }
 
         /// <summary>
@@ -99,73 +76,81 @@ namespace BASSProto1
             // Exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || currKeyState.IsKeyDown(Keys.Escape))
             {
-                // free the stream 
-                Bass.BASS_StreamFree(stream);
-                // free BASS 
-                Bass.BASS_Free();
                 Exit();
+            }
+
+            // Play/Pause
+            if (currKeyState.IsKeyDown(Keys.Space) &&
+                (prevKeyState == null || prevKeyState.IsKeyUp(Keys.Space)))
+            {
+                music.playPause();
             }
 
             // Flanger
             if (currKeyState.IsKeyDown(Keys.F) &&
                 (prevKeyState == null || prevKeyState.IsKeyUp(Keys.F)))
             {
-                fxFlanger = Bass.BASS_ChannelSetFX(stream, BASSFXType.BASS_FX_DX8_FLANGER, 1);
-            }
-            else if (currKeyState.IsKeyUp(Keys.F) && prevKeyState.IsKeyDown(Keys.F))
-            {
-                Bass.BASS_ChannelRemoveFX(stream, fxFlanger);
+                music.toggleFlanger();   
             }
 
             // Reverb (TODO: make it less jarring on the bass hits...)
             if (currKeyState.IsKeyDown(Keys.R) &&
                 (prevKeyState == null || prevKeyState.IsKeyUp(Keys.R)))
             {
-                fxReverb = Bass.BASS_ChannelSetFX(stream, BASSFXType.BASS_FX_DX8_REVERB, 1);
-            }
-            else if (currKeyState.IsKeyUp(Keys.R) && prevKeyState.IsKeyDown(Keys.R))
-            {
-                Bass.BASS_ChannelRemoveFX(stream, fxReverb);
+                music.toggleReverb();
             }
 
             // Filter
+            if (currKeyState.IsKeyDown(Keys.B) &&
+                (prevKeyState == null || prevKeyState.IsKeyUp(Keys.B)))
+            {
+                music.toggleFilter();
+            }
 
             // Chorus
             if (currKeyState.IsKeyDown(Keys.C) &&
                 (prevKeyState == null || prevKeyState.IsKeyUp(Keys.C)))
             {
-                fxChorus = Bass.BASS_ChannelSetFX(stream, BASSFXType.BASS_FX_DX8_CHORUS, 1);
-            }
-            else if (currKeyState.IsKeyUp(Keys.C) && prevKeyState.IsKeyDown(Keys.C))
-            {
-                Bass.BASS_ChannelRemoveFX(stream, fxChorus);
+                music.toggleChorus();   
             }
 
             // Gargle
             if (currKeyState.IsKeyDown(Keys.G) &&
                 (prevKeyState == null || prevKeyState.IsKeyUp(Keys.G)))
             {
-                fxGargle = Bass.BASS_ChannelSetFX(stream, BASSFXType.BASS_FX_DX8_GARGLE, 1);
+                music.toggleGargle();   
             }
-            else if (currKeyState.IsKeyUp(Keys.G) && prevKeyState.IsKeyDown(Keys.G))
-            {
-                Bass.BASS_ChannelRemoveFX(stream, fxGargle);
-            }
-
-            // Pitch Control
 
             // Distortion (TODO: Need to play with this a lot, it doesn't play nice with other FX)
             if (currKeyState.IsKeyDown(Keys.D) &&
                 (prevKeyState == null || prevKeyState.IsKeyUp(Keys.D)))
             {
-                fxDistortion = Bass.BASS_ChannelSetFX(stream, BASSFXType.BASS_FX_DX8_DISTORTION, 1);
-            }
-            else if (currKeyState.IsKeyUp(Keys.D) && prevKeyState.IsKeyDown(Keys.D))
-            {
-                Bass.BASS_ChannelRemoveFX(stream, fxDistortion);
+                music.toggleDistortion();
             }
 
-            // Overdrive
+            // Speed Control
+            if (currKeyState.IsKeyDown(Keys.Up) &&
+                (prevKeyState == null || prevKeyState.IsKeyUp(Keys.Up)))
+            {
+                music.speedUp(10);
+            }
+            if (currKeyState.IsKeyDown(Keys.Down) &&
+                (prevKeyState == null || prevKeyState.IsKeyUp(Keys.Down)))
+            {
+                music.slowDown(10);
+            }
+
+            // Pitch Control
+            if (currKeyState.IsKeyDown(Keys.NumPad8) &&
+                (prevKeyState == null || prevKeyState.IsKeyUp(Keys.NumPad8)))
+            {
+                music.pitchUp(1);
+            }
+            if (currKeyState.IsKeyDown(Keys.NumPad2) &&
+                (prevKeyState == null || prevKeyState.IsKeyUp(Keys.NumPad2)))
+            {
+                music.pitchDown(1);
+            }
 
             prevKeyState = Keyboard.GetState();
             base.Update(gameTime);
