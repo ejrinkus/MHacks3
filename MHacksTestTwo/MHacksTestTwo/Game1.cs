@@ -24,6 +24,7 @@ namespace MHacksTestOne
         ControllerPlayerSprite player_one;
         PlatformSprite platform;
         List<AbstractSprite> entities;
+        Music music;
 
         public Game1()
             : base()
@@ -68,6 +69,8 @@ namespace MHacksTestOne
             platform.Content_Load("cube");
             foreground = Content.Load<Texture2D>("earth");
             basichud = Content.Load<SpriteFont>("myFont");
+            music = new Music("Content/cinema.wav");
+            music.playPause();
 
             // TODO: use this.Content to load your game content here
         }
@@ -93,6 +96,21 @@ namespace MHacksTestOne
                 Exit();
             platform.Update();
             player_one.Update();
+
+            // Filter logic (narrower bandpass filter when the character is higher up)
+            float ratio = player_one.location.Y / 448f;
+            float low = ratio * 360f;
+            float high = 16000f - (low * 43.333f);
+            if (music.isFiltered() && ratio == 1f)
+            {
+                music.toggleFilter();
+            }
+            else if (ratio < 1f)
+            {
+                music.transformFilter(low, high);
+            }
+
+
             // TODO: Add your update logic here
 
             base.Update(gameTime);
