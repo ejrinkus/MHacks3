@@ -62,3 +62,5 @@ D:\My Dropbox\projects-side tasks and info\Visual Studio 2012\MHacks3\MHacksTest
 D:\My Dropbox\projects-side tasks and info\Visual Studio 2012\MHacks3\MHacksTestTwo\MHacksTestTwo\bin\Windows\Debug\SharpDX.RawInput.xml
 D:\My Dropbox\projects-side tasks and info\Visual Studio 2012\MHacks3\MHacksTestTwo\MHacksTestTwo\bin\Windows\Debug\SharpDX.Direct3D9.xml
 D:\My Dropbox\projects-side tasks and info\Visual Studio 2012\MHacks3\MHacksTestTwo\MHacksTestTwo\obj\x86\Debug\MHacksTestTwo.csprojResolveAssemblyReference.cache
+C:\Users\Eric\Documents\Visual Studio 2010\Projects\MHacks3\MHacksTestTwo\MHacksTestTwo\obj\x86\Debug\MHacksTestTwo.exe
+C:\Users\Eric\Documents\Visual Studio 2010\Projects\MHacks3\MHacksTestTwo\MHacksTestTwo\obj\x86\Debug\MHacksTestTwo.pdb
