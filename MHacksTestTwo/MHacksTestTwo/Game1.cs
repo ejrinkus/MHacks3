@@ -22,6 +22,7 @@ namespace MHacksTestOne
         Texture2D foreground;
         SpriteFont basichud;
         ControllerPlayerSprite player_one;
+        KeyboardPlayerSprite keyboard;
         PlatformSprite platform;
         List<AbstractSprite> entities;
         Music music;
@@ -33,6 +34,7 @@ namespace MHacksTestOne
             Content.RootDirectory = "Content";
             entities = new List<AbstractSprite>();
             player_one = new ControllerPlayerSprite(PlayerIndex.One, this, ref entities);
+            keyboard = new KeyboardPlayerSprite(this, ref entities);
             platform = new PlatformSprite(this);
             
             entities.Add(platform);
@@ -64,6 +66,8 @@ namespace MHacksTestOne
             spriteBatch = new SpriteBatch(GraphicsDevice); //create the sprite batch
             background = Content.Load<Texture2D>("stars");
             player_one.Set_Sprite_Batch(spriteBatch); //pass the spritebatch that is used in drawing
+            keyboard.Set_Sprite_Batch(spriteBatch);
+            keyboard.Content_Load("swordguy");
             player_one.Content_Load("swordguy"); //set the texture for player one
             platform.Set_Sprite_Batch(spriteBatch);
             platform.Content_Load("cube");
@@ -96,6 +100,7 @@ namespace MHacksTestOne
                 Exit();
             platform.Update();
             player_one.Update();
+            keyboard.Update();
 
             // Filter logic (narrower bandpass filter when the character is higher up)
             float ratio = player_one.location.Y / 448f;
@@ -130,6 +135,7 @@ namespace MHacksTestOne
 
             spriteBatch.Draw(background, new Rectangle(0, 0, 800, 480), Color.White);
             player_one.Draw();
+            keyboard.Draw();
             platform.Draw();
             spriteBatch.Draw(foreground, new Vector2(450, 420), Color.White);
             spriteBatch.DrawString(basichud, "ALL YOUR BASE ARE BELONG TO US", new Vector2(this.GraphicsDevice.Viewport.Width/2, 20), Color.White);

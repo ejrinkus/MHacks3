@@ -8,20 +8,18 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MHacksTestOne
 {
-    class ControllerPlayerSprite : AbstractPlayerSprite // a player that uses a generic controller to move
+    class KeyboardPlayerSprite : AbstractPlayerSprite
     {
-        PlayerIndex player; // the controller number 1-4
-        GamePadState oldgamePadState; // the last known state of the controller
-        GamePadState curgamePadState; // the current state of the controller
+        KeyboardState oldkeyState; // the last known state of the controller
+        KeyboardState curkeyState; // the current state of the controller
         //counters used for tracking the animated movements from the sprite
         int standing_counter = 0; 
         int left_counter = 0;
         int right_counter = 0;
         Random rnd1 = new Random(); //random number generator used for watching the plaer stand still
 
-        public ControllerPlayerSprite(PlayerIndex play, Game game_import, ref List<AbstractSprite> ent) : base()
+        public KeyboardPlayerSprite(Game game_import, ref List<AbstractSprite> ent) : base()
         {
-            player = play;
             game_obj = game_import;
             //sprite specific info
             rows = 2; 
@@ -33,13 +31,12 @@ namespace MHacksTestOne
         
         public void Update()
         {
-            oldgamePadState = curgamePadState;
-            curgamePadState = GamePad.GetState(player);
+            oldkeyState = curkeyState;
+            curkeyState = Keyboard.GetState();
             
             //movement
-            location.X += curgamePadState.ThumbSticks.Left.X * 9;
             
-            if (curgamePadState.ThumbSticks.Left.X < 0 ) //moving left
+            if (curkeyState.IsKeyDown(Keys.Left) && !curkeyState.IsKeyDown(Keys.Right) ) //moving left
             {
                 if (right_counter > 4)
                     right_counter = 1;
@@ -47,8 +44,9 @@ namespace MHacksTestOne
                 cur_row = 1;
                 cur_col = right_counter;
                 effect = SpriteEffects.FlipHorizontally;
+                location.X -= 9;
             }
-            else if (curgamePadState.ThumbSticks.Left.X > 0) //moving right
+            else if (!curkeyState.IsKeyDown(Keys.Left) && curkeyState.IsKeyDown(Keys.Right)) //moving right
             {
                 if (left_counter > 4)
                     left_counter = 1;
@@ -56,6 +54,7 @@ namespace MHacksTestOne
                 cur_row = 1;
                 cur_col = left_counter;
                 effect = SpriteEffects.None;
+                location.X += 9;
             }
             else //standing still
             {
@@ -68,7 +67,7 @@ namespace MHacksTestOne
             }
 
             //jumping
-            if (curgamePadState.Buttons.A == ButtonState.Pressed && oldgamePadState.Buttons.A == ButtonState.Released && (velocity.Y == 0 || velocity.Y == jump_correct)) {
+            if (curkeyState.IsKeyDown(Keys.Space) && oldkeyState.IsKeyUp(Keys.Space) && (velocity.Y == 0 || velocity.Y == jump_correct)) {
                 velocity.Y += 50;
                 cur_row = 0;
                 cur_col = 0;
@@ -83,7 +82,7 @@ namespace MHacksTestOne
         {
             //get the sub animated pixels
             Rectangle subsection =  new Rectangle(cur_width*cur_col,cur_height*cur_row,cur_width,cur_height);
-            spriteBatch.Draw(texture, location, subsection, Color.White, 0.0f,new Vector2(0,0),1.0f, effect,0.0f); //draw the player in the location specified
+            spriteBatch.Draw(texture, location, subsection, Color.Red, 0.0f,new Vector2(0,0),1.0f, effect,0.0f); //draw the player in the location specified
         }
     }
 }

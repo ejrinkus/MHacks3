@@ -10,6 +10,17 @@ namespace MHacksTestOne
     {
         protected int  health = 100; // we want to use this?
         protected List<AbstractSprite> entities;
+        protected float acceleration = -5; // the amount of pixels per tick that free fall is increased
+        protected float max_free_fall = -20; // the max pixels per second a person can fall at
+        protected float inital_fall_speed = -1; // the inital free fall speed that must be less than zero
+        protected float jump_correct;
+
+        protected AbstractPlayerSprite() 
+        {
+            jump_correct = acceleration + inital_fall_speed;
+        }
+        
+
         public bool isSquareSquareCollision(Rectangle ent_rect, Rectangle my_rect) //collisiong detection between square and square object
         {
             
@@ -48,20 +59,20 @@ namespace MHacksTestOne
             {
                 location.X -= velocity.X;
                 location.Y -= velocity.Y; //the 10 is for gravity //this is a useless comment //then why is it in here? //idk
-                velocity.Y -= 1;
+                velocity.Y += inital_fall_speed;
 
                 //gravity
                 if (velocity.Y != 0) //if they're falling then keep accelerating them
                 {
-                    velocity.Y -= 5;
+                    velocity.Y += acceleration;
                     if (velocity.Y == 0) //if we hit a stop condition, prevent that from triggering the user to jump
-                        velocity.Y = -1;
+                        velocity.Y = inital_fall_speed;
                 }
 
 
-                if (velocity.Y < -20) //limit free fall rate
+                if (velocity.Y < max_free_fall) //limit free fall rate
                 {
-                    velocity.Y = -20;
+                    velocity.Y = max_free_fall;
                 }
             }
             else //on collision
