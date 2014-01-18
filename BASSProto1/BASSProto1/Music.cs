@@ -54,7 +54,7 @@ namespace BASSProto1
                     // error creating the stream 
                     Console.WriteLine("Stream error: {0}", Bass.BASS_ErrorGetCode());
                 }
-
+                
             }
         }
 
@@ -88,7 +88,7 @@ namespace BASSProto1
 
         public void toggleFilter()
         {
-            if (filter)
+            if (!filter)
             {
                 BASS_BFX_BQF highFilter = new BASS_BFX_BQF();
                 fxHighFilter = Bass.BASS_ChannelSetFX(streamFX, BASSFXType.BASS_FX_BFX_BQF, 1);
@@ -110,9 +110,41 @@ namespace BASSProto1
             filter = !filter;
         }
 
+        // This creates a bandpass filter which allows the given range of frequencies.  When using this to create
+        // fade effects, stick to changing the low by 1 for every 43.333 you change the high (i.e. 0-16000 is
+        // "no filter", 250-5166.675, 300-3000 and so on)
+        public void transformFilter(float low, float high)
+        {
+            if (!filter)
+            {
+                BASS_BFX_BQF highFilter = new BASS_BFX_BQF();
+                fxHighFilter = Bass.BASS_ChannelSetFX(streamFX, BASSFXType.BASS_FX_BFX_BQF, 1);
+                highFilter.lFilter = BASSBFXBQF.BASS_BFX_BQF_HIGHPASS;
+                highFilter.fCenter = low;
+                Bass.BASS_FXSetParameters(fxHighFilter, highFilter);
+                BASS_BFX_BQF lowFilter = new BASS_BFX_BQF();
+                fxLowFilter = Bass.BASS_ChannelSetFX(streamFX, BASSFXType.BASS_FX_BFX_BQF, 1);
+                lowFilter.lFilter = BASSBFXBQF.BASS_BFX_BQF_LOWPASS;
+                lowFilter.fCenter = high;
+                Bass.BASS_FXSetParameters(fxLowFilter, lowFilter);
+            }
+            else
+            {
+                BASS_BFX_BQF highFilter = new BASS_BFX_BQF();
+                highFilter.lFilter = BASSBFXBQF.BASS_BFX_BQF_HIGHPASS;
+                highFilter.fCenter = low;
+                Bass.BASS_FXSetParameters(fxHighFilter, highFilter);
+                BASS_BFX_BQF lowFilter = new BASS_BFX_BQF();
+                lowFilter.lFilter = BASSBFXBQF.BASS_BFX_BQF_LOWPASS;
+                lowFilter.fCenter = high;
+                Bass.BASS_FXSetParameters(fxLowFilter, lowFilter);
+            }
+            filter = true;
+        }
+
         public void toggleChorus()
         {
-            if (chorus)
+            if (!chorus)
             {
                 fxChorus = Bass.BASS_ChannelSetFX(stream, BASSFXType.BASS_FX_DX8_CHORUS, 1);
             }
@@ -126,7 +158,7 @@ namespace BASSProto1
 
         public void toggleFlanger()
         {
-            if (flanger)
+            if (!flanger)
             {
                 fxFlanger = Bass.BASS_ChannelSetFX(stream, BASSFXType.BASS_FX_DX8_FLANGER, 1);
             }
@@ -140,7 +172,7 @@ namespace BASSProto1
 
         public void toggleReverb()
         {
-            if (reverb)
+            if (!reverb)
             {
                 fxReverb = Bass.BASS_ChannelSetFX(stream, BASSFXType.BASS_FX_DX8_REVERB, 1);
             }
@@ -154,7 +186,7 @@ namespace BASSProto1
 
         public void toggleGargle()
         {
-            if (gargle)
+            if (!gargle)
             {
                 fxGargle = Bass.BASS_ChannelSetFX(stream, BASSFXType.BASS_FX_DX8_GARGLE, 1);
             }
@@ -168,7 +200,7 @@ namespace BASSProto1
 
         public void toggleDistortion()
         {
-            if (distortion)
+            if (!distortion)
             {
                 fxDistortion = Bass.BASS_ChannelSetFX(stream, BASSFXType.BASS_FX_DX8_DISTORTION, 1);
             }

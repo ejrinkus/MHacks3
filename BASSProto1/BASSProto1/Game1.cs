@@ -7,8 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
-using Un4seen.Bass;
-using Un4seen.Bass.AddOn.Fx;
 #endregion
 
 namespace BASSProto1
@@ -23,6 +21,8 @@ namespace BASSProto1
         KeyboardState currKeyState;
         KeyboardState prevKeyState;
         Music music;
+        float low;
+        float high;
 
         public Game1()
             : base()
@@ -40,6 +40,8 @@ namespace BASSProto1
         protected override void Initialize()
         {
             base.Initialize();
+            low = 0;
+            high = 16000;
         }
 
         /// <summary>
@@ -151,6 +153,41 @@ namespace BASSProto1
             {
                 music.pitchDown(1);
             }
+
+            // Filter experiment
+            if (currKeyState.IsKeyDown(Keys.Z) && prevKeyState.IsKeyDown(Keys.Z))
+            {
+                float templow = low + 1;
+                float temphigh = high - 43.333f;
+                if (templow < temphigh)
+                {
+                    low = templow;
+                    high = temphigh;
+                    music.transformFilter(low, high);
+                }
+            }
+            else if (currKeyState.IsKeyUp(Keys.Z) && prevKeyState.IsKeyUp(Keys.Z))
+            {
+                if (low != 0 && high != 16000)
+                {
+                    float templow = low - 1;
+                    float temphigh = high + 43.333f;
+                    if (templow > 0 && temphigh < 16000)
+                    {
+                        low = templow;
+                        high = temphigh;
+                        music.transformFilter(low, high);
+                    }
+                    else
+                    {
+                        low = 0;
+                        high = 16000;
+                        music.toggleFilter();
+                    }
+                }
+
+            }
+
 
             prevKeyState = Keyboard.GetState();
             base.Update(gameTime);
