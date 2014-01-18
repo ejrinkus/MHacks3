@@ -30,9 +30,10 @@ namespace MHacksTestOne
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            entities = new List<AbstractSprite>();
             player_one = new ControllerPlayerSprite(PlayerIndex.One, this, ref entities);
             platform = new PlatformSprite(this);
-            entities = new List<AbstractSprite>();
+            
             entities.Add(platform);
             
         }

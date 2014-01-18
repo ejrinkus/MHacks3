@@ -10,7 +10,7 @@ namespace MHacksTestOne
 {
     class AbstractSprite : Game
     {
-        protected Vector2 location; // the standard location of the sprite
+        public Vector2 location; // the standard location of the sprite
         protected Vector2 old_location; // the old location of the sprite
         protected Vector2 velocity; // the current velocity of the sprite
         protected SpriteBatch spriteBatch;  // the sprite batch that will be used to draw the sprite
@@ -20,10 +20,10 @@ namespace MHacksTestOne
         public int columns { get; set; } // the number of cols
         protected int cur_col = 0; // the runtime active col of the sprite
         protected int cur_row = 0; // the runtime active row of the sprite
-        protected int cur_height = 0; // the runtime height of the object
-        protected int cur_width = 0; // the runtime width of the object
+        public int cur_height = 0; // the runtime height of the object
+        public int cur_width = 0; // the runtime width of the object
         protected SpriteEffects effect; //the applied effect to the sprite
-        protected int size_type; //size 0 for square type, any positive int for sphere type
+        public int size_type; //size 0 for square type, any positive int for sphere type
 
         public void Set_Sprite_Batch(SpriteBatch sprite)
         {

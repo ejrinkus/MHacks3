@@ -74,9 +74,23 @@ namespace MHacksTestOne
                 cur_col = 0;
             }
 
-            //move based on velocity
-            location.X -= velocity.X;
-            location.Y -= velocity.Y; //the 10 is for gravity
+
+            //move based on velocity after checking for collisions
+            bool collision = false;
+            for (int i = 0; i < entities.Count; i++)
+            {
+                AbstractSprite platform = entities.ElementAt(i);
+                Rectangle ent_rec = new Rectangle((int)platform.location.X, (int)platform.location.Y, platform.cur_width, platform.cur_height);
+                if (platform.size_type == 0)//square case
+                {
+                    collision = isSquareSquareCollision(ent_rec);
+                }
+            }
+            if (collision == false) // no collisions
+            {
+                location.X -= velocity.X;
+                location.Y -= velocity.Y; //the 10 is for gravity //this is a useless comment //then why is it in here? //idk
+            }
             
             
             
