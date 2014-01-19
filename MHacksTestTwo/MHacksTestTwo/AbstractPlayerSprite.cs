@@ -10,10 +10,10 @@ namespace MHacksTestOne
     {
         protected int  health = 100; // we want to use this?
         protected List<AbstractSprite> entities;
-        protected float acceleration = -5; // the amount of pixels per tick that free fall is increased
-        protected float max_free_fall = -20; // the max pixels per second a person can fall at
+        protected float acceleration = -0.05f; // the amount of pixels per tick that free fall is increased
+        protected float max_free_fall = -15; // the max pixels per second a person can fall at
         protected float inital_fall_speed = -1; // the inital free fall speed that must be less than zero
-        protected float jump_velocity = 40; // the amount on inital velocity for a jump
+        protected float jump_velocity = 20; // the amount on inital velocity for a jump
         protected float jump_correct;
 
         protected AbstractPlayerSprite() 
