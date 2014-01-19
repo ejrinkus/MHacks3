@@ -54,7 +54,7 @@ namespace BASSProto1
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Create the music object
-            music = new Music("Content/cinema.wav");
+            music = new Music("Content/cinema.mp3");
         }
 
         /// <summary>
@@ -188,6 +188,12 @@ namespace BASSProto1
 
             }
 
+            // Autowah
+            if (currKeyState.IsKeyDown(Keys.W) &&
+                (prevKeyState == null || prevKeyState.IsKeyUp(Keys.W)))
+            {
+                music.toggleWah();
+            }
 
             prevKeyState = Keyboard.GetState();
             base.Update(gameTime);
