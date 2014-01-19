@@ -9,19 +9,19 @@ namespace MHacksTestOne
 {
     class PlatformSprite : AbstractSprite
     {
-        public PlatformSprite(Game cur_game)
+        public PlatformSprite(Game cur_game, float scale, int x , int y)
         {
             game_obj = cur_game; //load in current game object
             size_type = 0; //indicate square
-            scale_factor = 0.25f;
+            scale_factor = scale;
+            location.X = x;
+            location.Y = y;
         }
 
         public void Update()
         {
             cur_width = texture.Width; //fill empty vars
             cur_height = texture.Height;
-            location.X = 240; //set static position
-            location.Y = 360;
         }
 
         public void Draw()

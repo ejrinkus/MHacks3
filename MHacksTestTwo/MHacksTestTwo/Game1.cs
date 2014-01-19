@@ -35,8 +35,7 @@ namespace MHacksTestOne
             entities = new List<AbstractSprite>();
             player_one = new ControllerPlayerSprite(PlayerIndex.One, this, ref entities);
             keyboard = new KeyboardPlayerSprite(this, ref entities);
-            platform = new PlatformSprite(this);
-            
+            platform = new PlatformSprite(this, 0.25f, 240, 360);
             entities.Add(platform);
             
         }
