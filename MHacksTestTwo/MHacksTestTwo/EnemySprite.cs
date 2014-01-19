@@ -11,6 +11,7 @@ namespace MHacksTestOne
         protected AbstractPlayerSprite player;
         protected Music music;
         protected bool colliding;
+        protected Random random;
 
         public EnemySprite(Game game_import, List<AbstractSprite> ent, 
             AbstractPlayerSprite p, ref BulletSprite bull, Music m)
@@ -21,12 +22,20 @@ namespace MHacksTestOne
             columns = 1;
             entities = ent; //get a reference to the entity list for collision detection later.
             spriteColor = Color.White;
+            random = new Random();
             inital_fall_speed = 0;
             max_free_fall = 0;
             bullets = bull;
             player = p;
-            location.X = 30f;
-            location.Y = 30f;
+            do
+            {
+                location.X = random.Next(game_obj.GraphicsDevice.Viewport.Width);
+                Console.WriteLine(location.X);
+            } while (Math.Abs(location.X - player.location.X) < player.cur_width + cur_width);
+            do
+            {
+                location.Y = random.Next(game_obj.GraphicsDevice.Viewport.Height);
+            } while (Math.Abs(location.Y - player.location.Y) < player.cur_height + cur_height);
             scale_factor = 0.3f;
             music = m;
             health = 100;
@@ -40,7 +49,7 @@ namespace MHacksTestOne
             location.Y += (float)Math.Sin(angle);
 
             // Distortion logic (make the player's ears bleed if they touch the enemy)
-            Rectangle playerRect = new Rectangle((int)player.location.X, (int)player.location.Y, 
+            Rectangle playerRect = new Rectangle((int)target.X, (int)target.Y, 
                 (int)(player.cur_width*player.scale_factor), (int)(player.cur_height*player.scale_factor));
             Rectangle thisRect = new Rectangle((int)location.X, (int)location.Y, 
                 (int)(cur_width*scale_factor), (int)(cur_height*scale_factor));
