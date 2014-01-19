@@ -68,7 +68,7 @@ namespace MHacksTestOne
 
             //jumping
             if (curkeyState.IsKeyDown(Keys.Space) && oldkeyState.IsKeyUp(Keys.Space) && (velocity.Y == 0 || velocity.Y == jump_correct)) {
-                velocity.Y += 50;
+                velocity.Y += jump_velocity;
                 cur_row = 0;
                 cur_col = 0;
             }

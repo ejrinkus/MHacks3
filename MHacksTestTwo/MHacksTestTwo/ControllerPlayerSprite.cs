@@ -69,7 +69,7 @@ namespace MHacksTestOne
 
             //jumping
             if (curgamePadState.Buttons.A == ButtonState.Pressed && oldgamePadState.Buttons.A == ButtonState.Released && (velocity.Y == 0 || velocity.Y == jump_correct)) {
-                velocity.Y += 20;
+                velocity.Y += jump_velocity;
                 cur_row = 0;
                 cur_col = 0;
             }
