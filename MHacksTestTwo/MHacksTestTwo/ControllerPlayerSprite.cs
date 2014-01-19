@@ -80,7 +80,7 @@ namespace MHacksTestOne
             //fire
             if ((curgamePadState.ThumbSticks.Right.X != 0 || curgamePadState.ThumbSticks.Right.Y != 0 ) && bullet_delay_counter == 5)
             {
-                Vector2 launch_dir = curgamePadState.ThumbSticks.Right;
+                Vector2 launch_dir = curgamePadState.ThumbSticks.Right*3;
                 launch_dir.Y *= -1;
                 bullets.spawn_bullet(launch_dir, location, this);
             }

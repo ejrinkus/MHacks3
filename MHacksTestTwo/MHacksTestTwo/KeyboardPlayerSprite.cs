@@ -37,6 +37,7 @@ namespace MHacksTestOne
             curkeyState = Keyboard.GetState();
             
             
+            
             //movement
             
             if (curkeyState.IsKeyDown(Keys.A) && !curkeyState.IsKeyDown(Keys.D) ) //moving left
@@ -85,11 +86,11 @@ namespace MHacksTestOne
                 mouse_coords.Y = curmouseState.Y;
                 Vector2 launch_dir = mouse_coords - location; //subtract/add the mouse coords from player loc to make a vector
                 launch_dir.Normalize();
-                launch_dir.X *= 5;
-                launch_dir.Y *= 5;
+                launch_dir.X *= 1;
+                launch_dir.Y *= 1;
                 bullets.spawn_bullet(launch_dir, location, this);
             }
-
+            Mouse.SetPosition(game_obj.GraphicsDevice.Viewport.Width / 2, game_obj.GraphicsDevice.Viewport.Height / 2);
 
 
             base.Update();
