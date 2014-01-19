@@ -27,6 +27,7 @@ namespace MHacksTestOne
         List<AbstractSprite> entities;
         Music music;
         BulletSprite bullets;
+        EnemySprite enemy;
 
         public Game1()
             : base()
@@ -122,6 +123,13 @@ namespace MHacksTestOne
             } else{
                 player = keyboard;
             }
+            if (enemy == null)
+            {
+                enemy = new EnemySprite(this, entities, player, ref bullets);
+                enemy.Set_Sprite_Batch(spriteBatch);
+                enemy.Content_Load("blog_alien_concepts");
+            }
+            enemy.Update();
             
 
             // Filter logic (narrower bandpass filter when the character is higher up)
@@ -166,6 +174,7 @@ namespace MHacksTestOne
             {
                 platform[i].Draw();
             }
+            if (enemy != null) enemy.Draw();
             bullets.Draw();
             spriteBatch.DrawString(basichud, "ALL YOUR BASE ARE BELONG TO US", new Vector2(this.GraphicsDevice.Viewport.Width/2, 20), Color.White);
 
