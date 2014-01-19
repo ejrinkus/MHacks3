@@ -77,13 +77,15 @@ namespace MHacksTestOne
             }
 
             //firing
-            if (curmouseState.LeftButton == ButtonState.Pressed)
+            if (curmouseState.LeftButton == ButtonState.Pressed) // while holding mouse down
             {
-                Vector2 mouse_coords = new Vector2();
+                Vector2 mouse_coords = new Vector2(); //get mouse coords
                 mouse_coords.X = curmouseState.X;
                 mouse_coords.Y = curmouseState.Y;
-                Vector2 launch_dir = mouse_coords - location;
-                //launch_dir.Y *= -1;
+                Vector2 launch_dir = mouse_coords - location; //subtract/add the mouse coords from player loc to make a vector
+                launch_dir.Normalize();
+                launch_dir.X *= 5;
+                launch_dir.Y *= 5;
                 bullets.spawn_bullet(launch_dir, location, this);
             }
 
