@@ -23,7 +23,7 @@ namespace MHacksTestOne
         SpriteFont basichud;
         ControllerPlayerSprite player_one;
         KeyboardPlayerSprite keyboard;
-        PlatformSprite platform;
+        PlatformSprite[] platform;
         List<AbstractSprite> entities;
         Music music;
 
@@ -35,8 +35,14 @@ namespace MHacksTestOne
             entities = new List<AbstractSprite>();
             player_one = new ControllerPlayerSprite(PlayerIndex.One, this, ref entities);
             keyboard = new KeyboardPlayerSprite(this, ref entities);
-            platform = new PlatformSprite(this, 0.25f, 240, 360);
-            entities.Add(platform);
+            platform = new PlatformSprite[3];
+            // init platform locs
+            platform[0] = new PlatformSprite(this, 0.25f, 200, 400);
+            platform[1] = new PlatformSprite(this, 0.25f, 400, 380);
+            platform[2] = new PlatformSprite(this, 0.25f, 175, 200);
+            entities.Add(platform[0]);
+            entities.Add(platform[1]);
+            entities.Add(platform[2]);
             
         }
 
@@ -68,8 +74,12 @@ namespace MHacksTestOne
             keyboard.Set_Sprite_Batch(spriteBatch);
             keyboard.Content_Load("swordguy");
             player_one.Content_Load("swordguy"); //set the texture for player one
-            platform.Set_Sprite_Batch(spriteBatch);
-            platform.Content_Load("cube");
+            for (int i = 0; i < platform.Length; i++)
+            {
+                platform[i].Set_Sprite_Batch(spriteBatch);
+                platform[i].Content_Load("wood-platform");
+                platform[i].Update();//just for an initital load. dont need to call repeatedly
+            }
             foreground = Content.Load<Texture2D>("earth");
             basichud = Content.Load<SpriteFont>("myFont");
             music = new Music("Content/cinema.wav");
@@ -97,7 +107,6 @@ namespace MHacksTestOne
             GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            platform.Update();
             player_one.Update();
             keyboard.Update();
 
@@ -129,10 +138,14 @@ namespace MHacksTestOne
             spriteBatch.Begin();
 
             spriteBatch.Draw(background, new Rectangle(0, 0, 800, 480), Color.White);
+            spriteBatch.Draw(foreground, new Vector2(450, 420), Color.White);
             player_one.Draw();
             keyboard.Draw();
-            platform.Draw();
-            spriteBatch.Draw(foreground, new Vector2(450, 420), Color.White);
+            for (int i = 0; i < platform.Length; i++)
+            {
+                platform[i].Draw();
+            }
+            
             spriteBatch.DrawString(basichud, "ALL YOUR BASE ARE BELONG TO US", new Vector2(this.GraphicsDevice.Viewport.Width/2, 20), Color.White);
 
 

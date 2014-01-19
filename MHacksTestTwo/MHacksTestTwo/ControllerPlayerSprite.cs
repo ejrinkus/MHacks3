@@ -75,6 +75,11 @@ namespace MHacksTestOne
                 cur_col = 0;
             }
 
+            //fire
+            if (curgamePadState.Triggers.Right == 0.0f)
+            {
+            }
+
 
 
             base.Update();

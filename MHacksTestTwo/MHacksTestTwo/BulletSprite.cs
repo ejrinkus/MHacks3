@@ -11,5 +11,10 @@ namespace MHacksTestOne
         {
 
         }
+
+        public void spawn_bullet()
+        {
+
+        }
     }
 }

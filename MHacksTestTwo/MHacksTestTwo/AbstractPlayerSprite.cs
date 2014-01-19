@@ -54,6 +54,10 @@ namespace MHacksTestOne
                 if (platform.size_type == 0)//square case
                 {
                     collision = isSquareSquareCollision(ent_rec, my_rect);
+                    if (collision == true)
+                    {
+                        break;
+                    }
                 }
             }
             if (collision == false) // no collisions
