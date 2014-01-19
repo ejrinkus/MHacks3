@@ -27,7 +27,7 @@ namespace MHacksTestOne
         List<AbstractSprite> entities;
         Music music;
         BulletSprite bullets;
-        EnemySprite enemy;
+        List<EnemySprite> enemies;
         AbstractPlayerSprite player;
         GamePadState oldpadstate;
         GamePadState gamepadstate;
@@ -144,17 +144,30 @@ namespace MHacksTestOne
             } else{
                 player = keyboard;
             }
-            if (enemy != null && enemy.health <= 0)
+            int newspawns = 0;
+            if (enemies == null)
             {
-                enemy = null;
+                newspawns = 1;
+                enemies = new List<EnemySprite>();
             }
-            if (enemy == null)
+            foreach (EnemySprite enemy in enemies)
             {
-                enemy = new EnemySprite(this, entities, player, ref bullets, music);
+                if (enemy != null && enemy.health <= 0)
+                {
+                    enemy.Respawn();
+                    newspawns++;
+                }
+                
+                enemy.Update();
+            }
+            for (int i = 0; i < newspawns; i++)
+            {
+                EnemySprite enemy = new EnemySprite(this, entities, player, ref bullets, music);
                 enemy.Set_Sprite_Batch(spriteBatch);
                 enemy.Content_Load("blog_alien_concepts");
+                enemies.Add(enemy);
+                enemy.Update();
             }
-            enemy.Update();
             
 
             // Filter logic (narrower bandpass filter when the character is higher up)
@@ -218,7 +231,7 @@ namespace MHacksTestOne
             {
                 platform[i].Draw();
             }
-            if (enemy != null) enemy.Draw();
+            foreach (EnemySprite enemy in enemies) enemy.Draw();
             
             spriteBatch.DrawString(basichud, "ALL YOUR BASE ARE BELONG TO US", new Vector2(this.GraphicsDevice.Viewport.Width/2, 20), Color.White);
             spriteBatch.DrawString(basichud, "Health " + player.health + "%", new Vector2(10, 10), Color.White);
