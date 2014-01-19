@@ -98,18 +98,18 @@ namespace MHacksTestOne
             {
                 location.X = 0;
             }
-            else if ((location.X + cur_width) > game_obj.GraphicsDevice.Viewport.Width)
+            else if ((location.X + cur_width*scale_factor) > game_obj.GraphicsDevice.Viewport.Width)
             {
-                location.X = game_obj.GraphicsDevice.Viewport.Width - cur_width;
+                location.X = game_obj.GraphicsDevice.Viewport.Width - cur_width*scale_factor;
             }
-            if ((location.Y - cur_height / 2) < 0)
+            if ((location.Y - (cur_height / 2)*scale_factor) < 0)
             {
-                location.Y = cur_height / 2;
+                location.Y = (cur_height / 2)*scale_factor;
                 velocity.Y -= 1; //start the player on a downward path
             }
-            else if (((location.Y + cur_height) > game_obj.GraphicsDevice.Viewport.Height))
+            else if (((location.Y + cur_height*scale_factor) > game_obj.GraphicsDevice.Viewport.Height))
             {
-                location.Y = game_obj.GraphicsDevice.Viewport.Height - cur_height;
+                location.Y = game_obj.GraphicsDevice.Viewport.Height - cur_height*scale_factor;
                 velocity.Y = 0; //they're at the bottom, stop them
             }
         }
@@ -118,7 +118,7 @@ namespace MHacksTestOne
         {
             //get the sub animated pixels
             Rectangle subsection = new Rectangle(cur_width * cur_col, cur_height * cur_row, cur_width, cur_height);
-            spriteBatch.Draw(texture, location, subsection, spriteColor, 0.0f, new Vector2(0, 0), 1.0f, effect, 0.0f); //draw the player in the location specified
+            spriteBatch.Draw(texture, location, subsection, spriteColor, 0.0f, new Vector2(0, 0), scale_factor, effect, 0.0f); //draw the player in the location specified
         }
     }
 }

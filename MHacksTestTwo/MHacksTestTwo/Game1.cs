@@ -75,6 +75,8 @@ namespace MHacksTestOne
             player_one.Set_Sprite_Batch(spriteBatch); //pass the spritebatch that is used in drawing
             keyboard.Set_Sprite_Batch(spriteBatch);
             keyboard.Content_Load("swordguy");
+            bullets.Set_Sprite_Batch(spriteBatch);
+            //bullets.Content_Load("bullet");
             player_one.Content_Load("swordguy"); //set the texture for player one
             for (int i = 0; i < platform.Length; i++)
             {
