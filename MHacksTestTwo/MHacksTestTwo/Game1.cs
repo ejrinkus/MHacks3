@@ -29,6 +29,8 @@ namespace MHacksTestOne
         BulletSprite bullets;
         EnemySprite enemy;
         AbstractPlayerSprite player;
+        KeyboardState oldkeystate;
+        KeyboardState keystate;
 
         public Game1()
             : base()
@@ -116,6 +118,8 @@ namespace MHacksTestOne
         protected override void Update(GameTime gameTime)
         {
             GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
+            oldkeystate = keystate;
+            keystate = Keyboard.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             player_one.Update();
@@ -145,6 +149,11 @@ namespace MHacksTestOne
             // Pan logic (match pan to lateral location of character)
             ratio = player.location.X / ((this.GraphicsDevice.Viewport.Width + player.cur_width) / 2);
             music.pan(ratio - 1);
+
+            if (oldkeystate.IsKeyUp(Keys.Space) && keystate.IsKeyDown(Keys.Space))
+            {
+                music.toggleFlanger();
+            }
 
             base.Update(gameTime);
         }
