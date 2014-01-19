@@ -16,11 +16,10 @@ namespace MHacksTestOne
         }
         public List<Bullet> bullet_arr;
 
-        public BulletSprite()
+        public BulletSprite(Game game_import)
         {
             bullet_arr = new List<Bullet>();
-            //cur_width = texture.Width;
-            //cur_height = texture.Height;
+            game_obj = game_import;
             spriteColor = Color.White;
         }
 
@@ -31,6 +30,8 @@ namespace MHacksTestOne
 
         public void Update()
         {
+            cur_width = texture.Width;
+            cur_height = texture.Height;
             for (int i = 0; i < bullet_arr.Count; i++)
             {
                 Bullet temp = bullet_arr[i];
@@ -53,7 +54,7 @@ namespace MHacksTestOne
             Rectangle subsection = new Rectangle(0, 0, cur_width, cur_height);
             for (int i = 0; i < bullet_arr.Count; i++)
             {
-                //spriteBatch.Draw(texture, location, subsection, spriteColor, 0.0f, new Vector2(0, 0), 1.0f, effect, 0.0f); //draw the player in the location specified
+                spriteBatch.Draw(texture, location, subsection, spriteColor, 0.0f, new Vector2(0, 0), 1.0f, effect, 0.0f); //draw the player in the location specified
             }
         }
     }

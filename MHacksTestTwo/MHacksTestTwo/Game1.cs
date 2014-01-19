@@ -34,7 +34,7 @@ namespace MHacksTestOne
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             entities = new List<AbstractSprite>();
-            bullets = new BulletSprite();
+            bullets = new BulletSprite(this);
             player_one = new ControllerPlayerSprite(PlayerIndex.One, this, ref entities, ref bullets);
             keyboard = new KeyboardPlayerSprite(this, ref entities, ref bullets);
             platform = new PlatformSprite[3];
@@ -76,7 +76,7 @@ namespace MHacksTestOne
             keyboard.Set_Sprite_Batch(spriteBatch);
             keyboard.Content_Load("swordguy");
             bullets.Set_Sprite_Batch(spriteBatch);
-            //bullets.Content_Load("bullet");
+            bullets.Content_Load("bullet");
             player_one.Content_Load("swordguy"); //set the texture for player one
             for (int i = 0; i < platform.Length; i++)
             {

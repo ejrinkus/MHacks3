@@ -50,7 +50,7 @@ namespace MHacksTestOne
             for (int i = 0; i < entities.Count; i++)
             {
                 AbstractSprite platform = entities.ElementAt(i);
-                Rectangle my_rect = new Rectangle((int)location.X - (int)velocity.X, (int)location.Y - (int)velocity.Y, cur_width, cur_height);
+                Rectangle my_rect = new Rectangle((int)location.X - (int)velocity.X, (int)location.Y - (int)velocity.Y, (int)(cur_width*scale_factor), (int)(cur_height*scale_factor));
                 Rectangle ent_rec = new Rectangle((int)platform.location.X, (int)platform.location.Y, (int)(platform.cur_width*platform.scale_factor), (int)(platform.cur_height*platform.scale_factor));
                 if (platform.size_type == 0)//square case
                 {
