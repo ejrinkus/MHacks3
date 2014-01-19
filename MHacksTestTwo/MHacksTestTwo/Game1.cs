@@ -125,7 +125,7 @@ namespace MHacksTestOne
             }
             if (enemy == null)
             {
-                enemy = new EnemySprite(this, entities, player, ref bullets);
+                enemy = new EnemySprite(this, entities, player, ref bullets, music);
                 enemy.Set_Sprite_Batch(spriteBatch);
                 enemy.Content_Load("blog_alien_concepts");
             }
@@ -141,8 +141,6 @@ namespace MHacksTestOne
             // Pan logic (match pan to lateral location of character)
             ratio = player.location.X / ((this.GraphicsDevice.Viewport.Width + player.cur_width) / 2);
             music.pan(ratio - 1);
-
-            // TODO: Add your update logic here
 
             base.Update(gameTime);
         }
