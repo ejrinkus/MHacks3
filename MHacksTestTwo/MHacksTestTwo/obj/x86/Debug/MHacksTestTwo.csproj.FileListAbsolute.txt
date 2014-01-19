@@ -98,4 +98,4 @@ C:\Users\Eric\Documents\Visual Studio 2010\Projects\MHacks3\MHacksTestTwo\MHacks
 C:\Users\Eric\Documents\Visual Studio 2010\Projects\MHacks3\MHacksTestTwo\MHacksTestTwo\obj\x86\Debug\MHacksTestTwo.csprojResolveAssemblyReference.cache
 C:\Users\Eric\Documents\Visual Studio 2010\Projects\MHacks3\MHacksTestTwo\MHacksTestTwo\bin\Windows\Debug\Content\bullet.png
 C:\Users\Eric\Documents\Visual Studio 2010\Projects\MHacks3\MHacksTestTwo\MHacksTestTwo\bin\Windows\Debug\Content\wood-platform.png
-C:\Users\Eric\Documents\Visual Studio 2010\Projects\MHacks3\MHacksTestTwo\MHacksTestTwo\bin\Windows\Debug\Content\blog_alien_concepts.jpg
+C:\Users\Eric\Documents\Visual Studio 2010\Projects\MHacks3\MHacksTestTwo\MHacksTestTwo\bin\Windows\Debug\Content\blog_alien_concepts.png

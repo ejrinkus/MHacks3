@@ -28,6 +28,7 @@ namespace MHacksTestOne
         Music music;
         BulletSprite bullets;
         EnemySprite enemy;
+        AbstractPlayerSprite player;
 
         public Game1()
             : base()
@@ -116,7 +117,6 @@ namespace MHacksTestOne
             player_one.Update();
             keyboard.Update();
             bullets.Update();
-            AbstractPlayerSprite player;
             if (gamePadState.IsConnected)
             {
                 player = player_one;
