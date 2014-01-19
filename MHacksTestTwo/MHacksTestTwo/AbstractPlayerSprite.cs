@@ -15,6 +15,7 @@ namespace MHacksTestOne
         protected float inital_fall_speed = -1; // the inital free fall speed that must be less than zero
         protected float jump_velocity = 20; // the amount on inital velocity for a jump
         protected float jump_correct;
+        protected BulletSprite bullets;
 
         protected AbstractPlayerSprite() 
         {

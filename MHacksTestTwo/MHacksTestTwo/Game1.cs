@@ -26,6 +26,7 @@ namespace MHacksTestOne
         PlatformSprite[] platform;
         List<AbstractSprite> entities;
         Music music;
+        BulletSprite bullets;
 
         public Game1()
             : base()
@@ -33,8 +34,9 @@ namespace MHacksTestOne
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             entities = new List<AbstractSprite>();
-            player_one = new ControllerPlayerSprite(PlayerIndex.One, this, ref entities);
-            keyboard = new KeyboardPlayerSprite(this, ref entities);
+            bullets = new BulletSprite();
+            player_one = new ControllerPlayerSprite(PlayerIndex.One, this, ref entities, ref bullets);
+            keyboard = new KeyboardPlayerSprite(this, ref entities, ref bullets);
             platform = new PlatformSprite[3];
             // init platform locs
             platform[0] = new PlatformSprite(this, 0.25f, 200, 400);
@@ -82,6 +84,7 @@ namespace MHacksTestOne
             }
             foreground = Content.Load<Texture2D>("earth");
             basichud = Content.Load<SpriteFont>("myFont");
+            
             music = new Music("Content/cinema.wav");
             music.playPause();
 
@@ -109,15 +112,24 @@ namespace MHacksTestOne
                 Exit();
             player_one.Update();
             keyboard.Update();
+            bullets.Update();
+            AbstractPlayerSprite player;
+            if (gamePadState.IsConnected)
+            {
+                player = player_one;
+            } else{
+                player = keyboard;
+            }
+            
 
             // Filter logic (narrower bandpass filter when the character is higher up)
-            float ratio = player_one.location.Y / (this.GraphicsDevice.Viewport.Height - player_one.cur_height);
+            float ratio = player.location.Y / (this.GraphicsDevice.Viewport.Height - player.cur_height);
             float low = 360f - (360f * ratio);
             float high = 16000f - (low * 43.333f);
             music.transformFilter(low, high);
 
             // Pan logic (match pan to lateral location of character)
-            ratio = player_one.location.X / ((this.GraphicsDevice.Viewport.Width + player_one.cur_width) / 2);
+            ratio = player.location.X / ((this.GraphicsDevice.Viewport.Width + player.cur_width) / 2);
             music.pan(ratio - 1);
 
             // TODO: Add your update logic here
@@ -132,6 +144,7 @@ namespace MHacksTestOne
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
 
             // TODO: Add your drawing code here
 
@@ -139,13 +152,19 @@ namespace MHacksTestOne
 
             spriteBatch.Draw(background, new Rectangle(0, 0, 800, 480), Color.White);
             spriteBatch.Draw(foreground, new Vector2(450, 420), Color.White);
-            player_one.Draw();
-            keyboard.Draw();
+            if (gamePadState.IsConnected)
+            {
+                player_one.Draw();
+            }
+            else
+            {
+                keyboard.Draw();
+            }
             for (int i = 0; i < platform.Length; i++)
             {
                 platform[i].Draw();
             }
-            
+            bullets.Draw();
             spriteBatch.DrawString(basichud, "ALL YOUR BASE ARE BELONG TO US", new Vector2(this.GraphicsDevice.Viewport.Width/2, 20), Color.White);
 
 

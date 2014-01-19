@@ -18,7 +18,7 @@ namespace MHacksTestOne
         int right_counter = 0;
         Random rnd1 = new Random(); //random number generator used for watching the plaer stand still
 
-        public KeyboardPlayerSprite(Game game_import, ref List<AbstractSprite> ent) : base()
+        public KeyboardPlayerSprite(Game game_import, ref List<AbstractSprite> ent, ref BulletSprite bull) : base()
         {
             game_obj = game_import;
             //sprite specific info
@@ -26,7 +26,8 @@ namespace MHacksTestOne
             columns = 6;
             velocity.Y -= 1; //set an inital velocity so that the player falls to the ground
             entities = ent; //get a reference to the entity list for collision detection later.
-            spriteColor = Color.Red;
+            spriteColor = Color.White;
+            bullets = bull;
         }
 
         

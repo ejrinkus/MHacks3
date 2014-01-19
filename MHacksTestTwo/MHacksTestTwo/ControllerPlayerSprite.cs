@@ -19,7 +19,7 @@ namespace MHacksTestOne
         int right_counter = 0;
         Random rnd1 = new Random(); //random number generator used for watching the plaer stand still
 
-        public ControllerPlayerSprite(PlayerIndex play, Game game_import, ref List<AbstractSprite> ent) : base()
+        public ControllerPlayerSprite(PlayerIndex play, Game game_import, ref List<AbstractSprite> ent, ref BulletSprite bull) : base()
         {
             player = play;
             game_obj = game_import;
@@ -29,6 +29,7 @@ namespace MHacksTestOne
             velocity.Y -= 1; //set an inital velocity so that the player falls to the ground
             entities = ent; //get a reference to the entity list for collision detection later.
             spriteColor = Color.White;
+            bullets = bull;
         }
 
         
@@ -76,8 +77,11 @@ namespace MHacksTestOne
             }
 
             //fire
-            if (curgamePadState.Triggers.Right == 0.0f)
+            if (curgamePadState.ThumbSticks.Right.X != 0 || curgamePadState.ThumbSticks.Right.Y != 0)
             {
+                Vector2 launch_dir = curgamePadState.ThumbSticks.Right;
+                launch_dir.Normalize();
+                bullets.spawn_bullet(launch_dir);
             }
 
 
