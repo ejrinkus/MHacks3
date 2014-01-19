@@ -13,7 +13,7 @@ namespace MHacksTestOne
             Vector2 velocity;
             Vector2 location;
         }
-
+        public List<Bullet> bullet_arr;
 
         public BulletSprite()
         {
