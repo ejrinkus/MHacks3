@@ -214,7 +214,13 @@ namespace MHacksTestOne
         {
             if (!distortion)
             {
+                BASS_DX8_DISTORTION distParams = new BASS_DX8_DISTORTION();
                 fxDistortion = Bass.BASS_ChannelSetFX(stream, BASSFXType.BASS_FX_DX8_DISTORTION, 1);
+                distParams.fEdge = 100;
+                distParams.fPreLowpassCutoff = 8000;
+                distParams.fPostEQCenterFrequency = 1000;
+                distParams.fPostEQBandwidth = 8000;
+                Bass.BASS_FXSetParameters(fxDistortion, distParams);
             }
             else
             {
