@@ -175,9 +175,9 @@ namespace MHacksTestOne
                 platform[i].Draw();
             }
             if (enemy != null) enemy.Draw();
-            bullets.Draw();
+            
             spriteBatch.DrawString(basichud, "ALL YOUR BASE ARE BELONG TO US", new Vector2(this.GraphicsDevice.Viewport.Width/2, 20), Color.White);
-
+            bullets.Draw();
 
 
             spriteBatch.End();

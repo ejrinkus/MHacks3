@@ -29,7 +29,11 @@ namespace MHacksTestOne
         {
             Bullet temp = new Bullet();
             temp.owner = owner;
+            Vector2 player_size;
+            player_size.Y= owner.cur_height / 2;
+            player_size.X = owner.cur_width / 2;
             temp.location = loc;
+            temp.location -= player_size;
             temp.velocity = dir;
             bullet_arr.Add(temp);
         }
@@ -42,7 +46,7 @@ namespace MHacksTestOne
             {
                 Bullet temp = bullet_arr[i];
                 temp.location += temp.velocity;
-                Rectangle rect = new Rectangle((int)temp.location.X, (int)temp.location.Y, cur_width, cur_height);
+                Rectangle rect = new Rectangle((int)temp.location.X, (int)temp.location.Y, (int)(cur_width*scale_factor), (int)(cur_height*scale_factor));
                 if (game_obj.GraphicsDevice.Viewport.Bounds.Contains(rect))
                 {
                     bullet_arr[i] = temp;
@@ -57,10 +61,12 @@ namespace MHacksTestOne
         public void Draw()
         {
             //get the sub animated pixels
-            Rectangle subsection = new Rectangle(0, 0, cur_width, cur_height);
+            
             for (int i = 0; i < bullet_arr.Count; i++)
             {
-                spriteBatch.Draw(texture, location, subsection, spriteColor, 0.0f, new Vector2(0, 0), 1.0f, effect, 0.0f); //draw the player in the location specified
+                Bullet temp = bullet_arr[i];
+                Rectangle subsection = new Rectangle((int)temp.location.X, (int)temp.location.Y, (int)(cur_width*scale_factor), (int)(cur_height*scale_factor));
+                spriteBatch.Draw(texture, temp.location, subsection, spriteColor, 0.0f, new Vector2(0, 0), 1.0f, effect, 0.0f); //draw the player in the location specified
             }
         }
     }
