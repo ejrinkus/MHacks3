@@ -8,7 +8,6 @@ namespace MHacksTestOne
 {
     class EnemySprite : AbstractPlayerSprite
     {
-        protected BulletSprite bullet;
         protected AbstractPlayerSprite player;
         protected Music music;
         protected bool colliding;
@@ -24,12 +23,13 @@ namespace MHacksTestOne
             spriteColor = Color.White;
             inital_fall_speed = 0;
             max_free_fall = 0;
-            bullet = bull;
+            bullets = bull;
             player = p;
             location.X = 30f;
             location.Y = 30f;
             scale_factor = 0.3f;
             music = m;
+            health = 100;
         }
 
         public void Update()
@@ -59,6 +59,17 @@ namespace MHacksTestOne
             if (isSquareSquareCollision(playerRect, thisRect))
             {
                 player.health -= 0.1f;
+            }
+
+            for (int i = 0; i < bullets.bullet_arr.Count; i++)
+            {
+                BulletSprite.Bullet temp_bullet = bullets.bullet_arr[i];
+                Rectangle bull = new Rectangle((int)temp_bullet.location.X, (int)temp_bullet.location.Y, (int)temp_bullet.size.X, (int)temp_bullet.size.Y);
+                if (thisRect.Intersects(bull))
+                {
+                    health -= 10;
+                    bullets.bullet_arr.RemoveAt(i);
+                }
             }
 
             base.Update();
