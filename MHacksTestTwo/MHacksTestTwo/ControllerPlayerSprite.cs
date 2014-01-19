@@ -81,7 +81,7 @@ namespace MHacksTestOne
             {
                 Vector2 launch_dir = curgamePadState.ThumbSticks.Right;
                 launch_dir.Normalize();
-                bullets.spawn_bullet(launch_dir);
+                bullets.spawn_bullet(launch_dir, location, this);
             }
 
 

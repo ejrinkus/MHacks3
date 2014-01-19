@@ -13,6 +13,7 @@ namespace MHacksTestOne
             public Vector2 velocity;
             public Vector2 location;
             public Vector2 size;
+            public AbstractPlayerSprite owner;
         }
         public List<Bullet> bullet_arr;
 
@@ -21,11 +22,16 @@ namespace MHacksTestOne
             bullet_arr = new List<Bullet>();
             game_obj = game_import;
             spriteColor = Color.White;
+            scale_factor = 0.1f;
         }
 
-        public void spawn_bullet(Vector2 dir)
+        public void spawn_bullet(Vector2 dir, Vector2 loc, AbstractPlayerSprite owner)
         {
-
+            Bullet temp = new Bullet();
+            temp.owner = owner;
+            temp.location = loc;
+            temp.velocity = dir;
+            bullet_arr.Add(temp);
         }
 
         public void Update()
