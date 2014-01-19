@@ -56,6 +56,10 @@ namespace MHacksTestOne
                 music.toggleReverb();
                 colliding = false;
             }
+            if (isSquareSquareCollision(playerRect, thisRect))
+            {
+                player.health -= 0.1f;
+            }
 
             base.Update();
         }

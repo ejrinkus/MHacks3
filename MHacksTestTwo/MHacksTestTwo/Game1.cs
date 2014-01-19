@@ -39,14 +39,18 @@ namespace MHacksTestOne
             bullets = new BulletSprite(this);
             player_one = new ControllerPlayerSprite(PlayerIndex.One, this, ref entities, ref bullets);
             keyboard = new KeyboardPlayerSprite(this, ref entities, ref bullets);
-            platform = new PlatformSprite[3];
+            platform = new PlatformSprite[4];
             // init platform locs
             platform[0] = new PlatformSprite(this, 0.25f, 200, 400);
             platform[1] = new PlatformSprite(this, 0.25f, 400, 380);
             platform[2] = new PlatformSprite(this, 0.25f, 175, 200);
+            platform[3] = new PlatformSprite(this, 0.25f, 550, 150);
             entities.Add(platform[0]);
             entities.Add(platform[1]);
             entities.Add(platform[2]);
+            entities.Add(platform[3]);
+
+            this.IsMouseVisible = true;
             
         }
 
@@ -175,6 +179,7 @@ namespace MHacksTestOne
             if (enemy != null) enemy.Draw();
             
             spriteBatch.DrawString(basichud, "ALL YOUR BASE ARE BELONG TO US", new Vector2(this.GraphicsDevice.Viewport.Width/2, 20), Color.White);
+            spriteBatch.DrawString(basichud, "Health " + player.health + "%", new Vector2(10, 10), Color.White);
             bullets.Draw();
 
 

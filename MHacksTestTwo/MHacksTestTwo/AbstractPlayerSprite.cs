@@ -8,7 +8,7 @@ namespace MHacksTestOne
 {
     class AbstractPlayerSprite : AbstractSprite // a basic player that can have health and can move
     {
-        protected int  health = 100; // we want to use this?
+        public float  health = 100; // we want to use this?
         protected List<AbstractSprite> entities;
         protected float acceleration = -0.05f; // the amount of pixels per tick that free fall is increased
         protected float max_free_fall = -15; // the max pixels per second a person can fall at

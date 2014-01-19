@@ -35,10 +35,11 @@ namespace MHacksTestOne
         {
             oldkeyState = curkeyState;
             curkeyState = Keyboard.GetState();
+            MouseState curmouseState = Mouse.GetState();
             
             //movement
             
-            if (curkeyState.IsKeyDown(Keys.Left) && !curkeyState.IsKeyDown(Keys.Right) ) //moving left
+            if (curkeyState.IsKeyDown(Keys.A) && !curkeyState.IsKeyDown(Keys.D) ) //moving left
             {
                 if (right_counter > 4)
                     right_counter = 1;
@@ -48,7 +49,7 @@ namespace MHacksTestOne
                 effect = SpriteEffects.FlipHorizontally;
                 location.X -= 9;
             }
-            else if (!curkeyState.IsKeyDown(Keys.Left) && curkeyState.IsKeyDown(Keys.Right)) //moving right
+            else if (!curkeyState.IsKeyDown(Keys.A) && curkeyState.IsKeyDown(Keys.D)) //moving right
             {
                 if (left_counter > 4)
                     left_counter = 1;
@@ -73,6 +74,17 @@ namespace MHacksTestOne
                 velocity.Y += jump_velocity;
                 cur_row = 0;
                 cur_col = 0;
+            }
+
+            //firing
+            if (curmouseState.LeftButton == ButtonState.Pressed)
+            {
+                Vector2 mouse_coords = new Vector2();
+                mouse_coords.X = curmouseState.X;
+                mouse_coords.Y = curmouseState.Y;
+                Vector2 launch_dir = mouse_coords - location;
+                //launch_dir.Y *= -1;
+                bullets.spawn_bullet(launch_dir, location, this);
             }
 
 
