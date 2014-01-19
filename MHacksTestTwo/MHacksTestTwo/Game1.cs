@@ -29,8 +29,13 @@ namespace MHacksTestOne
         BulletSprite bullets;
         EnemySprite enemy;
         AbstractPlayerSprite player;
+        GamePadState oldpadstate;
+        GamePadState gamepadstate;
         KeyboardState oldkeystate;
         KeyboardState keystate;
+        MouseState oldmousestate;
+        MouseState mousestate;
+        bool songChosen;
 
         public Game1()
             : base()
@@ -95,7 +100,7 @@ namespace MHacksTestOne
             foreground = Content.Load<Texture2D>("earth");
             basichud = Content.Load<SpriteFont>("myFont");
             
-            music = new Music("Content/cinema.wav");
+            music = new Music("Content/dropkick.mp3");
             music.playPause();
 
             // TODO: use this.Content to load your game content here
@@ -117,15 +122,23 @@ namespace MHacksTestOne
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
+            //Choose a song
+            if (!songChosen)
+            {
+                
+            }
+            oldpadstate = gamepadstate;
+            gamepadstate = GamePad.GetState(PlayerIndex.One);
             oldkeystate = keystate;
             keystate = Keyboard.GetState();
+            oldmousestate = mousestate;
+            mousestate = Mouse.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             player_one.Update();
             keyboard.Update();
             bullets.Update();
-            if (gamePadState.IsConnected)
+            if (gamepadstate.IsConnected)
             {
                 player = player_one;
             } else{
@@ -150,10 +163,26 @@ namespace MHacksTestOne
             ratio = player.location.X / ((this.GraphicsDevice.Viewport.Width + player.cur_width) / 2);
             music.pan(ratio - 1);
 
-            if (oldkeystate.IsKeyUp(Keys.Space) && keystate.IsKeyDown(Keys.Space))
+            // Flanger logic (overlay effect while shooting)
+            if ((oldpadstate.ThumbSticks.Right.X != 0 || oldpadstate.ThumbSticks.Right.Y != 0) &&
+                (gamepadstate.ThumbSticks.Right.X == 0 && gamepadstate.ThumbSticks.Right.Y == 0))
             {
                 music.toggleFlanger();
             }
+            if ((oldpadstate.ThumbSticks.Right.X == 0 && oldpadstate.ThumbSticks.Right.Y == 0) &&
+                (gamepadstate.ThumbSticks.Right.X != 0 || gamepadstate.ThumbSticks.Right.Y != 0))
+            {
+                music.toggleFlanger();
+            }
+            if (oldkeystate.IsKeyDown(Keys.W) && !keystate.IsKeyDown(Keys.W))
+            {
+                music.toggleFlanger();
+            }
+            if (!oldkeystate.IsKeyDown(Keys.W) && keystate.IsKeyDown(Keys.W))
+            {
+                music.toggleFlanger();
+            }
+
 
             base.Update(gameTime);
         }
