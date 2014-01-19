@@ -35,7 +35,7 @@ namespace MHacksTestOne
         {
             oldkeyState = curkeyState;
             curkeyState = Keyboard.GetState();
-            MouseState curmouseState = Mouse.GetState();
+            
             
             //movement
             
@@ -77,8 +77,9 @@ namespace MHacksTestOne
             }
 
             //firing
-            if (curmouseState.LeftButton == ButtonState.Pressed) // while holding mouse down
+            if (curkeyState.IsKeyDown(Keys.W)) // while holding mouse down
             {
+                MouseState curmouseState = Mouse.GetState();
                 Vector2 mouse_coords = new Vector2(); //get mouse coords
                 mouse_coords.X = curmouseState.X;
                 mouse_coords.Y = curmouseState.Y;
