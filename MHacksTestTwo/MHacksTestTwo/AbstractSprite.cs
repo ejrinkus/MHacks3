@@ -25,6 +25,7 @@ namespace MHacksTestOne
         protected SpriteEffects effect; //the applied effect to the sprite
         public int size_type; //size 0 for square type, any positive int for sphere type
         public float scale_factor = 1.0f;
+        protected Color spriteColor;
 
         public void Set_Sprite_Batch(SpriteBatch sprite)
         {

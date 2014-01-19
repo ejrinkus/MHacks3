@@ -28,6 +28,7 @@ namespace MHacksTestOne
             columns = 6;
             velocity.Y -= 1; //set an inital velocity so that the player falls to the ground
             entities = ent; //get a reference to the entity list for collision detection later.
+            spriteColor = Color.White;
         }
 
         
@@ -79,11 +80,6 @@ namespace MHacksTestOne
             base.Update();
         }
 
-        public void Draw()
-        {
-            //get the sub animated pixels
-            Rectangle subsection =  new Rectangle(cur_width*cur_col,cur_height*cur_row,cur_width,cur_height);
-            spriteBatch.Draw(texture, location, subsection, Color.White, 0.0f,new Vector2(0,0),1.0f, effect,0.0f); //draw the player in the location specified
-        }
+
     }
 }

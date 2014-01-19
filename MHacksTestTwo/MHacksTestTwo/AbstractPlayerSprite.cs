@@ -108,5 +108,12 @@ namespace MHacksTestOne
                 velocity.Y = 0; //they're at the bottom, stop them
             }
         }
+
+        public void Draw()
+        {
+            //get the sub animated pixels
+            Rectangle subsection = new Rectangle(cur_width * cur_col, cur_height * cur_row, cur_width, cur_height);
+            spriteBatch.Draw(texture, location, subsection, spriteColor, 0.0f, new Vector2(0, 0), 1.0f, effect, 0.0f); //draw the player in the location specified
+        }
     }
 }
