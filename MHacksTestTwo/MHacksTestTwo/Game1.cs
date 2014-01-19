@@ -144,6 +144,10 @@ namespace MHacksTestOne
             } else{
                 player = keyboard;
             }
+            if (enemy != null && enemy.health <= 0)
+            {
+                enemy = null;
+            }
             if (enemy == null)
             {
                 enemy = new EnemySprite(this, entities, player, ref bullets, music);

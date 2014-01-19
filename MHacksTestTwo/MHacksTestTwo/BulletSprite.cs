@@ -35,6 +35,8 @@ namespace MHacksTestOne
             temp.location = loc;
             temp.location += player_size;
             temp.velocity = dir;
+            temp.size.X = texture.Width;
+            temp.size.Y = texture.Height;
             bullet_arr.Add(temp);
         }
 
