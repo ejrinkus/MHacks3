@@ -22,18 +22,18 @@ namespace MHacksTestOne
             bullet_arr = new List<Bullet>();
             game_obj = game_import;
             spriteColor = Color.White;
-            scale_factor = 0.1f;
+            scale_factor = 0.05f;
         }
 
         public void spawn_bullet(Vector2 dir, Vector2 loc, AbstractPlayerSprite owner)
         {
             Bullet temp = new Bullet();
             temp.owner = owner;
-            Vector2 player_size;
+            Vector2 player_size = new Vector2();
             player_size.Y= owner.cur_height / 2;
             player_size.X = owner.cur_width / 2;
             temp.location = loc;
-            temp.location -= player_size;
+            temp.location += player_size;
             temp.velocity = dir;
             bullet_arr.Add(temp);
         }
@@ -65,8 +65,10 @@ namespace MHacksTestOne
             for (int i = 0; i < bullet_arr.Count; i++)
             {
                 Bullet temp = bullet_arr[i];
-                Rectangle subsection = new Rectangle((int)temp.location.X, (int)temp.location.Y, (int)(cur_width*scale_factor), (int)(cur_height*scale_factor));
-                spriteBatch.Draw(texture, temp.location, subsection, spriteColor, 0.0f, new Vector2(0, 0), 1.0f, effect, 0.0f); //draw the player in the location specified
+                Vector2 pointing = temp.velocity;
+                pointing.Normalize();
+                Rectangle subsection = new Rectangle(0, 0, (int)(cur_width), (int)(cur_height));
+                spriteBatch.Draw(texture, temp.location, subsection, spriteColor, (float)Math.Atan2(pointing.Y,pointing.X), new Vector2(0, 0), scale_factor, effect, 0.0f); //draw the player in the location specified
             }
         }
     }

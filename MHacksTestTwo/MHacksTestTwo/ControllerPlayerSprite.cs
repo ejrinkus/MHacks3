@@ -17,6 +17,7 @@ namespace MHacksTestOne
         int standing_counter = 0; 
         int left_counter = 0;
         int right_counter = 0;
+        int bullet_delay_counter = 0;
         Random rnd1 = new Random(); //random number generator used for watching the plaer stand still
 
         public ControllerPlayerSprite(PlayerIndex play, Game game_import, ref List<AbstractSprite> ent, ref BulletSprite bull) : base()
@@ -77,12 +78,16 @@ namespace MHacksTestOne
             }
 
             //fire
-            if (curgamePadState.ThumbSticks.Right.X != 0 || curgamePadState.ThumbSticks.Right.Y != 0)
+            if ((curgamePadState.ThumbSticks.Right.X != 0 || curgamePadState.ThumbSticks.Right.Y != 0 ) && bullet_delay_counter == 5)
             {
-                Vector2 launch_dir = curgamePadState.ThumbSticks.Right;
-                launch_dir.Normalize();
+                Vector2 launch_dir = curgamePadState.ThumbSticks.Right * 3;
+                launch_dir.Y *= -1;
                 bullets.spawn_bullet(launch_dir, location, this);
             }
+
+            bullet_delay_counter++;
+            if (bullet_delay_counter >= 10)
+                bullet_delay_counter = 0;
 
 
 
