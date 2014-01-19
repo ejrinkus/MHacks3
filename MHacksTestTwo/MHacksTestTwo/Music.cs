@@ -165,7 +165,14 @@ namespace MHacksTestOne
         {
             if (!flanger)
             {
+                BASS_DX8_FLANGER flangParams = new BASS_DX8_FLANGER();
                 fxFlanger = Bass.BASS_ChannelSetFX(stream, BASSFXType.BASS_FX_DX8_FLANGER, 1);
+                flangParams.fDelay = 4;  //0ms-4ms, 0 default
+                flangParams.fDepth = 35;  //0-100, 25 default
+                flangParams.fFeedback = 0;  //-99-99, 0 default
+                flangParams.fFrequency = 7;  //0-10, 0 default
+                flangParams.fWetDryMix = 50;  //0(dry)-100(wet), 0 default
+                Bass.BASS_FXSetParameters(fxFlanger, flangParams);
             }
             else
             {

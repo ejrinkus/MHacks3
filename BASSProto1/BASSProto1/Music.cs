@@ -31,6 +31,8 @@ namespace BASSProto1
         bool gargle;
         int fxDistortion;
         bool distortion;
+        int fxWah;
+        bool wah;
 
         public Music(String filename)
         {
@@ -42,12 +44,13 @@ namespace BASSProto1
             chorus = false;
             gargle = false;
             distortion = false;
+            wah = false;
 
             // init BASS using the default output device 
             if (Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
             {
                 // create a stream channel from a file
-                stream = Bass.BASS_StreamCreateFile("Content/cinema.wav", 0, 0, BASSFlag.BASS_STREAM_DECODE);
+                stream = Bass.BASS_StreamCreateFile(filename, 0, 0, BASSFlag.BASS_STREAM_DECODE);
                 streamFX = BassFx.BASS_FX_TempoCreate(stream, BASSFlag.BASS_FX_FREESOURCE);
                 if (stream == 0)
                 {
@@ -160,7 +163,14 @@ namespace BASSProto1
         {
             if (!flanger)
             {
+                BASS_DX8_FLANGER flangParams = new BASS_DX8_FLANGER();
                 fxFlanger = Bass.BASS_ChannelSetFX(stream, BASSFXType.BASS_FX_DX8_FLANGER, 1);
+                flangParams.fDelay = 4; //0ms-4ms, 0 default
+                flangParams.fDepth = 35;  //0-100, 25 default
+                flangParams.fFeedback = 0;  //-99-99, 0 default
+                flangParams.fFrequency = 7;  //0-10, 0 default
+                flangParams.fWetDryMix = 50;  //0(dry)-100(wet), 0 default
+                Bass.BASS_FXSetParameters(fxFlanger, flangParams);
             }
             else
             {
@@ -202,7 +212,14 @@ namespace BASSProto1
         {
             if (!distortion)
             {
+                BASS_DX8_DISTORTION distParams = new BASS_DX8_DISTORTION();
                 fxDistortion = Bass.BASS_ChannelSetFX(stream, BASSFXType.BASS_FX_DX8_DISTORTION, 1);
+                distParams.fEdge = 50; //0-100 Hz default 50
+                distParams.fGain = 0; //-60-0 Hz default 0
+                distParams.fPostEQBandwidth = 4000; //100-8000 Hz default 4000
+                distParams.fPostEQCenterFrequency = 4000; //100-8000 Hz default 4000
+                distParams.fPreLowpassCutoff = 4000; //100-8000 Hz default 4000
+                Bass.BASS_FXSetParameters(fxDistortion, distParams);
             }
             else
             {
@@ -240,6 +257,23 @@ namespace BASSProto1
             float pitch = 0.0f;
             Bass.BASS_ChannelGetAttribute(streamFX, BASSAttribute.BASS_ATTRIB_TEMPO_PITCH, ref pitch);
             Bass.BASS_ChannelSetAttribute(streamFX, BASSAttribute.BASS_ATTRIB_TEMPO_PITCH, pitch - semitones);
+        }
+
+        public void toggleWah()
+        {
+            if (!wah)
+            {
+                BASS_BFX_AUTOWAH wahParams = new BASS_BFX_AUTOWAH();
+                fxWah = Bass.BASS_ChannelSetFX(streamFX, BASSFXType.BASS_FX_BFX_AUTOWAH, 1);
+                wahParams.Preset_HiFastAutoWah();
+                Bass.BASS_FXSetParameters(fxWah, wahParams);
+            }
+            else
+            {
+                Bass.BASS_ChannelRemoveFX(streamFX, fxWah);
+            }
+
+            wah = !wah;
         }
 
     }
