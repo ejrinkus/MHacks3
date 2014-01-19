@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="AbstractPlayerSprite.cs" />
     <Compile Include="AbstractSprite.cs" />
+    <Compile Include="BulletSprite.cs" />
     <Compile Include="ControllerPlayerSprite.cs" />
     <Compile Include="EnemySprite.cs" />
     <Compile Include="Game1.cs" />
@@ -76,6 +77,9 @@
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\bullet">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Content\myFont.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

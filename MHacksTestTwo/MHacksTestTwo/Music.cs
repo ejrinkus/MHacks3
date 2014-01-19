@@ -47,7 +47,7 @@ namespace MHacksTestOne
             if (Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
             {
                 // create a stream channel from a file
-                stream = Bass.BASS_StreamCreateFile("Content/cinema.wav", 0, 0, BASSFlag.BASS_STREAM_DECODE | BASSFlag.BASS_SAMPLE_FX);
+                stream = Bass.BASS_StreamCreateFile(filename, 0, 0, BASSFlag.BASS_STREAM_DECODE | BASSFlag.BASS_SAMPLE_FX);
                 streamFX = BassFx.BASS_FX_TempoCreate(stream, BASSFlag.BASS_FX_FREESOURCE);
                 if (stream == 0)
                 {
