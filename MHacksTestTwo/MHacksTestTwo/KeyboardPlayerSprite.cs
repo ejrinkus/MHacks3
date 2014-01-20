@@ -17,6 +17,7 @@ namespace MHacksTestOne
         int left_counter = 0;
         int right_counter = 0;
         Random rnd1 = new Random(); //random number generator used for watching the plaer stand still
+        int bullet_delay_counter = 0;
 
         public KeyboardPlayerSprite(Game game_import, ref List<AbstractSprite> ent, ref BulletSprite bull) : base()
         {
@@ -78,19 +79,23 @@ namespace MHacksTestOne
             }
 
             //firing
-            if (curkeyState.IsKeyDown(Keys.W)) // while holding mouse down
+            if (curkeyState.IsKeyDown(Keys.W) && bullet_delay_counter == 5) // while holding mouse down
             {
-                MouseState curmouseState = Mouse.GetState();
+                System.Drawing.Point mouse = System.Windows.Forms.Control.MousePosition;
                 Vector2 mouse_coords = new Vector2(); //get mouse coords
-                mouse_coords.X = curmouseState.X;
-                mouse_coords.Y = curmouseState.Y;
+                mouse_coords.X = mouse.X;
+                mouse_coords.Y = mouse.Y;
                 Vector2 launch_dir = mouse_coords - location; //subtract/add the mouse coords from player loc to make a vector
                 launch_dir.Normalize();
-                launch_dir.X *= 1;
-                launch_dir.Y *= 1;
+                launch_dir.X *= 3;
+                launch_dir.Y *= 3;
                 bullets.spawn_bullet(launch_dir, location, this);
             }
-            Mouse.SetPosition(game_obj.GraphicsDevice.Viewport.Width / 2, game_obj.GraphicsDevice.Viewport.Height / 2);
+           
+
+            bullet_delay_counter++;
+            if (bullet_delay_counter >= 7)
+                bullet_delay_counter = 0;
 
 
             base.Update();
