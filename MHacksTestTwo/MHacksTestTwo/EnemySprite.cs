@@ -41,6 +41,20 @@ namespace MHacksTestOne
             health = 100;
         }
 
+        public void Respawn()
+        {
+            do
+            {
+                location.X = random.Next(game_obj.GraphicsDevice.Viewport.Width);
+                Console.WriteLine(location.X);
+            } while (Math.Abs(location.X - player.location.X) < player.cur_width + cur_width);
+            do
+            {
+                location.Y = random.Next(game_obj.GraphicsDevice.Viewport.Height);
+            } while (Math.Abs(location.Y - player.location.Y) < player.cur_height + cur_height);
+            health = 100;
+        }
+
         public void Update()
         {
             Vector2 target = player.location;
